@@ -1,0 +1,35 @@
+<!--Form to add a new album to the library-->
+{% extends 'template.html' %}
+{% block title %}Add Album{% endblock %}
+
+{% block content %}
+{% if session['username'] %}
+<div class="container">
+	<div class="card" style="color: black">
+		<div class="card-header">
+			<h4>Enter the album details below</h4>
+		</div>
+		<div class="card-body">
+			<h5>* fields are required</h5>
+			{% from "includes/_formhelpers.html" import render_field %}
+			<form method="POST" enctype = "multipart/form-data">
+				<dl>
+					<label for="image"><b>Album cover*</b></label>
+					<input type="file" name="image" id="image">
+					{{ render_field(form.title, class="form-control") }}
+					{{ render_field(form.artist_id, class="form-control") }}
+					{{ render_field(form.release_date, class="form-control") }}
+					{{ render_field(form.genre_id, class="form-control") }}
+				</dl>
+				<p><input class="btn btn-success" type="submit" value="Add!"></p>
+			</form>
+		</div>
+	</div>
+</div>
+{% else %}
+<center>
+	<h1>Please login to access the music library</h1>
+	<a href="url_for('login')" class='btn btn-primary'>Click here to login</a>
+</center>
+{% endif  %}
+{% endblock %}

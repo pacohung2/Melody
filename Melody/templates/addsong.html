@@ -1,0 +1,33 @@
+<!--Form to add a new song to an album-->
+{% extends 'template.html' %}
+{% block title %}Add Song{% endblock %}
+
+{% block content %}
+{% if session['username'] %}
+<div class="container">
+  <div class="card" style="color: black">
+    <div class="card-header">
+      <h4>Input the song details below</h4>
+    </div>
+    <div class="card-body">
+      <h5>* fields are required</h5>
+      {% from "includes/_formhelpers.html" import render_field %}
+      <form method="POST">
+        <dl>
+          {{ render_field(form.title, class="form-control") }}
+          {{ render_field(form.lyrics, class="form-control") }}
+          {{ render_field(form.length, class="form-control") }}
+          {{ render_field(form.video, class="form-control") }}
+        </dl>
+        <p><input class="btn btn-success" type="submit" value="Add!"></p>
+      </form>
+    </div>
+  </div>
+</div>
+{% else %}
+<center>
+  <h1>Please login to access the music library</h1>
+  <a href="url_for('login')" class='btn btn-primary'>Click here to login</a>
+</center>
+{% endif %}
+{% endblock %}

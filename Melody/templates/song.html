@@ -1,0 +1,60 @@
+<!--Template for displaying song information-->
+{% extends 'template.html' %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+{% if session.username %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card mb-4" style="color: black;">
+        <div class="card-header" style="font-size: 30px">
+          <center><b>{{ title }}</b>
+            {% if fav %}
+            <a href="/removefavorite/{{ id }}"><i class="fas fa-heart"></i></a>
+            {% else %}
+            <a href="/addfavorite/{{ id }}"><i class="far fa-heart"></i></a>
+            {% endif %}
+          </center>
+        </div>
+        <center>
+          <div class="card-body">
+            <p><a href="/editsong/{{ id }}" class="btn btn-outline-primary">Edit song</a><a href="/removesong/{{ id }}" class="btn btn-outline-danger">Remove song</a></p>
+            <h6>from {{ album }}</h6>
+            <p class="card-text">Length: {{ length }}</p>
+            <button class="btn btn-outline-danger" onclick="showhide()">Show/Hide Lyrics</button>
+            <div class="col-lg-12" id="lyrics" style="display: none; margin-top: 10px">
+              <pre style="">{{ lyrics }}</pre>
+            </div>
+          </div>
+        </center>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <center>
+        <iframe width="560" height="315" src="{{ video }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </center>
+    </div>
+  </div>
+  {% else %}
+  <center>
+    <h1>Please login to access the music library</h1>
+    <a href="url_for('login')" class='btn btn-primary'>Click here to login</a>
+  </center>
+  {% endif %}
+</div>
+
+<script>
+  function showhide() {
+    var lyrics = document.getElementById("lyrics");
+
+    if (lyrics.style.display === 'none') {
+      lyrics.style.display = 'block';
+    } else {
+      lyrics.style.display = 'none';
+    }
+  }
+</script>
+
+
+{% endblock %}

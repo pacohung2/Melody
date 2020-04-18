@@ -1,0 +1,105 @@
+<!--Displays all the albums with sorting options-->
+{% extends 'template.html' %}
+{% block title %}Melody Library{% endblock %}
+
+{% block content %}
+{% if session.username %}
+<div class="container-fluid">
+  <!--Button to sort the albums by genre, year of release or artist names-->
+  <div class="dropdown show pull-right">
+    <a class="btn-lg btn-warning dropdown-toggle" href="#" data-toggle="dropdown">Group by:</a>
+    <div class="dropdown-menu" style="background: white;">
+      <a class="dropdown-item" href="/library/genre">Genre</a>
+      <a class="dropdown-item" href="/library/year">Year</a>
+      <a class="dropdown-item" href="/library/artist">Artist</a>
+    </div>
+  </div>
+  <center><a href="/addalbum/" class="btn btn-success" style="font-size: 35px;">Add album</a></center>
+  <!--Loops to display information from the database, seperated by the sorting options-->
+  {% if order == 'genre' %}
+  {% for g in genres %}
+  <h3>{{ g[0] }}</h3>
+  <hr>
+  <div class="row">
+    {% for c in content %}
+    {% if c[0] == g[0] %}
+    <div class="col-lg-4 col-md-6">
+      <div class="card mb-4" style="width: 20rem; background-color: darkblue">
+        <div class="card-header" style="font-size: 30px">
+          <center><b>{{ c[3] }}</b></center>
+        </div>
+        <img src="/static/images/albums/{{ c[2] }}" style="height: 300px">
+        <center>
+          <div class="card-body">
+            <h5>by {{ c[5] }}</h5>
+            <p class="card-text">Released in: {{ c[4] }}</p>
+            <a href="/album/{{ c[1] }}" class="btn btn-outline-light">View album</a>
+          </div>
+        </center>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% endfor %}
+  {% elif order == 'year' %}
+  {% for y in years %}
+  <h3>{{ y[0] }}</h3>
+  <hr>
+  <div class="row">
+    {% for c in content %}
+    {% if c[4] == y[0] %}
+    <div class="col-lg-4 col-md-6">
+      <div class="card mb-4" style="width: 20rem; background-color: darkblue">
+        <div class="card-header" style="font-size: 30px">
+          <center><b>{{ c[3] }}</b></center>
+        </div>
+        <img src="/static/images/albums/{{ c[2] }}" style="height: 300px">
+        <center>
+          <div class="card-body">
+            <h5>by {{ c[5] }}</h5>
+            <p class="card-text">Released in: {{ c[4] }}</p>
+            <a href="/album/{{ c[1] }}" class="btn btn-outline-light">View album</a>
+          </div>
+        </center>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% endfor %}
+  {% else %}
+  {% for a in artists %}
+  <h3>{{ a[0] }}</h3>
+  <hr>
+  <div class="row">
+    {% for c in content %}
+    {% if c[5] == a[0] %}
+    <div class="col-lg-4 col-md-6">
+      <div class="card mb-4" style="width: 20rem; background-color: darkblue">
+        <div class="card-header" style="font-size: 30px">
+          <center><b>{{ c[3] }}</b></center>
+        </div>
+        <img src="/static/images/albums/{{ c[2] }}" style="height: 300px">
+        <center>
+          <div class="card-body">
+            <h5>by {{ c[5] }}</h5>
+            <p class="card-text">Released in: {{ c[4] }}</p>
+            <a href="/album/{{ c[1] }}" class="btn btn-outline-light">View album</a>
+          </div>
+        </center>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% endfor %}
+  {% endif %}
+  {% else %}
+  <center>
+    <h1>Please login to access the music library</h1>
+    <a href="/login" class='btn btn-primary'>Click here to login</a>
+  </center>
+  {% endif %}
+</div>
+{% endblock %}

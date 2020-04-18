@@ -1,0 +1,45 @@
+<!--Home page of the website-->
+{% extends 'template.html' %}
+{% block title %}Welcome to Melody{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <!--Displays 3 images, with controls to switch between them-->
+    <div id="carousel" class="carousel slide" data-ride="carousel">
+      <ul class="carousel-indicators">
+        <li data-target="#carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel" data-slide-to="1"></li>
+        <li data-target="#carousel" data-slide-to="2"></li>
+      </ul>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="{{ url_for("static", filename="images/audience.jpg") }}" class="img-fluid" alt="audience">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for("static", filename="images/pf.jpg") }}" class="img-fluid" alt="pf">
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for("static", filename="images/concert.jpg") }}" class="img-fluid" alt="concert">
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carousel" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </a>
+      <a class="carousel-control-next" href="#carousel" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!--Short welcome message in a jumbotron display-->
+<div class="jumbotron">
+  <div class="container">
+    <div style="text-align: center; color: black">
+      <h1 class="display-4">Welcome to Melody</h1>
+      <p class="lead">For more information, visit the About page.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

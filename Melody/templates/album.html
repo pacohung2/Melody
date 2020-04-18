@@ -1,0 +1,62 @@
+<!--Template for displaying album information-->
+{% extends 'template.html' %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+{% if session.username %}
+<div class="container">
+  <!--Displays the album cover alongside the album information-->
+  <div class="row">
+    <div class="col-lg-6">
+      <img src="/static/images/albums/{{ image }}" class="border border-primary" style="border-width: 10px !important; height: 375px">
+    </div>
+    <div class="col-lg-6">
+      <div class="card mb-4" style="color: black;">
+        <div class="card-header" style="font-size: 30px">
+          <center><b>{{ title }}</b></center>
+          <center><a href="/editalbum/{{ id }}" class="btn btn-outline-primary">Edit album</a></center>
+        </div>
+        <center>
+          <div class="card-body">
+            <!--Mouseover tooltip that displays the list of members in the band-->
+            <p>by </p>
+            <h4 data-toggle="tooltip" data-placement="top" title="{{ members }}" style="color: blue;">{{ artist }}</h4>
+            <p>Release date: {{ release_date }}</p>
+            <p>Genre: {{ genre }}</p>
+            <br>
+            <a href="/removealbum/{{ id }}" class="btn btn-danger">REMOVE ALBUM</a>
+          </div>
+        </center>
+      </div>
+    </div>
+  </div>
+  <h3>Track list</h3> <a href="/addsong/{{ id }}" class="btn btn-success">Add song</a>
+  <!--List of songs in the album-->
+  <table class="table" style="color: white">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Length</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in songs %}
+      <tr>
+        <th>{{ s[1] }}</th>
+        <td>{{ s[2] }}</td>
+        <!--Button to view more details of a specific song-->
+        <td><a href="/song/{{ s[0] }}" class="btn btn-outline-light">Details</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<center>
+  <h1>Please login to access the music library</h1>
+  <a href="url_for('login')" class='btn btn-primary'>Click here to login</a>
+</center>
+{% endif %}
+</center>
+{% endblock %}
